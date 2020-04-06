@@ -21,6 +21,8 @@ class DataGenerator():
         self.mean_count = config.getfloat('make_data', 'mean_count')
         self.bg_count = config.getfloat('make_data', 'bg_count', fallback=None)
         self.rel_scale = config.getfloat('make_data', 'rel_scale', fallback=1000.)
+        self.dia_params = [float(s) for s in config.get('make_data', 'dia_params').split()]
+        self.shift_sigma = config.getfloat('make_data', 'shift_sigma')
         self.out_file = os.path.join(os.path.dirname(config_file),
                                      config.get('make_data', 'out_photons_file'))
 
@@ -124,16 +126,18 @@ class DataGenerator():
         multi = fptr.create_dataset('multi', (self.num_data,), dtype='i4')
 
         #shifts = np.random.random((self.num_data, 2))*6 - 3
-        shifts = np.random.randn(self.num_data, 2)*1.
+        #shifts = np.random.randn(self.num_data, 2)*1.
         #shifts = np.zeros((self.num_data, 2))
+        shifts = np.random.randn(self.num_data, 2)*self.shift_sigma
         fptr['true_shifts'] = shifts
         if self.fluence == 'gamma':
             scale = np.random.gamma(2., 0.5, self.num_data)
         else:
             scale = np.ones(self.num_data, dtype='f8')
         fptr['scale'] = scale
-        diameters = np.random.randn(self.num_data)*0.5 + 7.
+        #diameters = np.random.randn(self.num_data)*0.5 + 7.
         #diameters = np.ones(self.num_data)*7.
+        diameters = np.random.randn(self.num_data)*self.dia_params[1] + self.dia_params[0]
         fptr['true_diameters'] = diameters
         #rel_scales = diameters**3 * 1000. / 7**3
         #scale *= rel_scales/1.e3
