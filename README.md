@@ -1,7 +1,7 @@
 # Simulations for Reference-enchanced Single Particle Imaging
 
-This code contains code for simulating reconstructions from variable-reference holographic data. The algorithm and simulation details are described in the following preprint:
-> [Reference-enhanced X-ray Single Particle Imaging, arXiv:2002.10267 [eees.IV]](https://arxiv.org/abs/2002.10267)
+This code contains code for simulating reconstructions from variable-reference holographic data. The algorithm and simulation details are described in the following paper:
+> [Reference-enhanced X-ray Single Particle Imaging, Optica **7**(6), 593-601 (2020)](https://doi.org/10.1364/OPTICA.391373)
 
 The program is pure-Python and runs on a CUDA-enabled GPU using the CuPy library. Additionally, the following libraries are used 
  - `numpy` for CPU math
